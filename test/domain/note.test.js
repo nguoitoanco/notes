@@ -70,5 +70,22 @@ describe('Tests for domain Note', function() {
                 });
             });
         });
-    });
-});
+
+	// Test for fixing bug: subject of a note can be updated.
+	describe('updateSubject', () => {
+            it('Test for bug: subject of a note can not be updated', () => {
+                return domainNote.update({
+                    body: 'new body',
+                    subject: 'new subject'
+                }).then(() => {
+                    domainNote.expose().should.match({
+                        id: noteId,
+                        subject: 'some subject',
+                        body: 'new body',
+                        updatedAt: _.isDate,
+                    });
+                });
+            });
+        });
+
+});});
