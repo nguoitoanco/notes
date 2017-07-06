@@ -11,10 +11,11 @@ angular.module('app').component('noteEdit', {
             this.error = this._validate();
 
             if (!this.error) {
-                Note.update({
-                    id: this.note.id
-                }, {
-                    body: this.note.body
+				this.note.version = this.note.version + 1;
+                Note.save({
+                    subject: this.note.subject,
+                    body: this.note.body,
+					version: this.note.version,
                 }).$promise.then(() => {
                     $location.path(`/notes/${ this.note.id }`);
                 }).catch(reason => {

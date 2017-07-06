@@ -11,16 +11,19 @@ angular.module('app').component('noteList', {
             this.hasNotes = !_.isEmpty(this.notes);
         };
 
-        this.deleteNote = function(note) {
+        this.deleteNotes = function(note) {
             this.error = null;
-
-            Note.delete({
-                id: note.id
-            }).$promise.then(() => {
-                $route.reload();
-            }).catch(reason => {
-                this.error = 'Error occurred while deleting the note.';
-            });
-        };
+			for (var i in this.notes) {
+				if (this.notes[i].subject == note.subject) {
+					Note.delete({
+							id: this.notes[i].id
+					}).$promise.then(() => {
+						$route.reload();
+						}).catch(reason => {
+					   this.error = 'Error occurred while deleting the note.';
+						});
+				}
+			}
+		};
     },
 });

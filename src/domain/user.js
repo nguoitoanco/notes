@@ -57,6 +57,22 @@ class User {
         });
     }
 
+    getNotesBySubject(subject) {
+        return this._user.getNotes({
+            where: {
+                subject
+            },
+            order: [['version', 'DESC']],
+        }).then(notes => {
+            if (_.size(notes) !== 1) {
+                return q.reject(new domain.Error(domain.Error.Code.NOTE_NOT_FOUND));
+            }
+            else {
+                return new domain.Note(notes[0]);
+            }
+        });
+    }
+
     createNote(note) {
         return this._user.createNote(note).then(modelNote => {
             return new domain.Note(modelNote);
