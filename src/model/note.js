@@ -24,6 +24,11 @@ module.exports.define = sequelize => {
                 notEmpty: true
             }
         },
+	version: {
+	    type: Sequelize.INTEGER,
+	    allowNull: false,
+	    defaultValue:1
+	},
     }, {
         indexes: [
             {

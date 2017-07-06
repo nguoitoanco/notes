@@ -1,20 +1,42 @@
 <navbar session="$ctrl.session"></navbar>
 
 <ol class="breadcrumb">
-    <li><a href="#!/">List</a></li>
-    <li class="active" ng-bind="$ctrl.note.subject"></li>
+    <li><a href="#!/">Back to list</a></li>
+    <h2>Other notes have same subject</h2>
+
+
+    <table ng-if="$ctrl.hasNotes" class="table table-hover">
+		<tr>
+			<th>Subject</th>
+			<th>Updated at</th>
+			<th></th>
+		</tr>
+
+		<tr ng-repeat="note in $ctrl.relateNotes">
+			<td>
+				<a ng-href="#!/notes/{{ note.id }}" ng-bind="note.subject"></a>
+			</td>
+
+			<td ng-bind="note.updatedAt | date:'medium'"></td>
+
+			<td>
+				<a href="" ng-click="$ctrl.deleteNote(note)">
+					<span class="glyphicon glyphicon-remove text-danger"></span>
+				</a>
+			</td>
+		</tr>
+	</table>
 </ol>
-
 <p class="clearfix">
-    <a class="btn btn-default pull-right" ng-href="#!/notes/{{ $ctrl.note.id }}/edit">Edit</a>
+	<a class="btn btn-default pull-right" ng-href="#!/notes/{{ $ctrl.relateNotes[0].id }}/edit">Edit</a>
 </p>
-
 <div class="panel panel-default">
     <div class="panel-heading">
         <h3 class="panel-title" ng-bind="$ctrl.note.subject"></h3>
     </div>
 
     <div class="panel-body" style="white-space: pre-wrap;" ng-bind="$ctrl.note.body"></div>
+    <div class="panel-body" style="white-space: pre-wrap;" ng-bind="$ctrl.note.version"></div>
 
     <div class="panel-footer" ng-bind="$ctrl.note.updatedAt | date:'medium'"></div>
 </div>

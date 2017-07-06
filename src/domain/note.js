@@ -16,17 +16,20 @@ class Note {
             'id',
             'subject',
             'body',
+	    'version', 
             'updatedAt',
         ]);
     }
 
+    // How to fix bug: subject can be updated.
+    // This method is not allowed to update subject of note.
     update(note) {
-        return this._note.update(note);
+		note.subject = this._note.subject;
+		return this._note.update(note);
     }
 
     delete() {
         return this._note.destroy();
     }
 }
-
 module.exports = Note;
